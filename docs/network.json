@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "owner": "divyachinthapatla2001-cpu",
+  "apps": [
+    {
+      "id": "zion-support.github.io",
+      "name": "Network gateway fork",
+      "description": "Existing Zion Tech Group gateway source fork.",
+      "repository": "https://github.com/divyachinthapatla2001-cpu/zion-support.github.io",
+      "demo": null,
+      "related": [
+        "zion-seo-optimizer",
+        "zion-web-quality-suite",
+        "zion-network-maintenance-suite"
+      ]
+    },
+    {
+      "id": "zion-seo-optimizer",
+      "name": "SEO Optimizer fork",
+      "description": "Existing standalone SEO landing-page source fork.",
+      "repository": "https://github.com/divyachinthapatla2001-cpu/zion-seo-optimizer",
+      "demo": null,
+      "related": [
+        "zion-support.github.io",
+        "zion-web-quality-suite",
+        "zion-network-maintenance-suite"
+      ]
+    },
+    {
+      "id": "zion-web-quality-suite",
+      "name": "Web Quality Suite",
+      "description": "Inspect pasted HTML, inventory links, and calculate WCAG contrast.",
+      "repository": "https://github.com/divyachinthapatla2001-cpu/zion-web-quality-suite",
+      "demo": "https://divyachinthapatla2001-cpu.github.io/zion-web-quality-suite/",
+      "related": [
+        "zion-support.github.io",
+        "zion-seo-optimizer",
+        "zion-network-maintenance-suite"
+      ]
+    },
+    {
+      "id": "zion-network-maintenance-suite",
+      "name": "Network Maintenance Suite",
+      "description": "Validate app-network manifests, reciprocal links, and README paths.",
+      "repository": "https://github.com/divyachinthapatla2001-cpu/zion-network-maintenance-suite",
+      "demo": "https://divyachinthapatla2001-cpu.github.io/zion-network-maintenance-suite/",
+      "related": [
+        "zion-support.github.io",
+        "zion-seo-optimizer",
+        "zion-web-quality-suite"
+      ]
+    }
+  ]
+}

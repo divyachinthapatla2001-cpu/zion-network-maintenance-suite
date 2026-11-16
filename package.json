@@ -1,0 +1,15 @@
+{
+  "name": "zion-network-maintenance-suite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "App-network JSON validation, all-to-all relationship checks, README inline-link and inventory diagnostics, and downloadable JSON reports.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check-site.mjs"
+  },
+  "license": "MIT"
+}

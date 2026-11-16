@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {validateManifest,auditReadme,normalizePath} from '../docs/assets/core.js';
+const sample=JSON.parse(fs.readFileSync(new URL('../docs/network.json',import.meta.url),'utf8'));
+const clone=()=>structuredClone(sample);
+test('the four-app registry has twelve reciprocal directed edges',()=>{const r=validateManifest(clone());assert.equal(r.valid,true);assert.equal(r.expectedDirectedEdges,12)});
+test('missing edges are identified by source and target',()=>{const m=clone();m.apps[0].related.pop();const r=validateManifest(m);assert.equal(r.valid,false);assert.equal(r.missingEdges.length,1)});
+test('duplicates and unknown relations are rejected',()=>{const m=clone();m.apps[1].id=m.apps[0].id;m.apps[0].related.push('unknown');assert.equal(validateManifest(m).valid,false)});
+test('unsafe repository and demo URLs are rejected',()=>{const m=clone();m.apps[0].repository='javascript:alert(1)';m.apps[1].demo='https://evil.test/demo/';assert.equal(validateManifest(m).valid,false)});
+test('malformed manifests produce diagnostics rather than throwing',()=>{for(const x of [null,{},[],{apps:[null]}])assert.equal(validateManifest(x).valid,false)});
+test('repo-root paths normalize without escaping',()=>{assert.equal(normalizePath('./docs/../README.md'),'README.md');assert.equal(normalizePath('../../private'),null)});
+test('README inventory distinguishes an existing and missing guide',()=>{const r=auditReadme('[Usage](docs/USAGE.md) [Missing](docs/missing.md)',['docs/USAGE.md'],sample);assert.equal(r.localLinks[0].inInventory,true);assert.equal(r.localLinks[1].inInventory,false);assert.equal(r.valid,false)});
+test('unsafe Markdown link schemes are diagnosed',()=>assert.equal(auditReadme('[bad](javascript:payload)',[],sample).valid,false));
+test('README network checks use actual links, not code examples',()=>{const code='```md\n'+sample.apps.map(a=>`[x](${a.repository})`).join('\n')+'\n```';assert.equal(auditReadme(code,[],sample).missingRepositories.length,4)});
+test('suite README links to all network members',()=>{const r=auditReadme(fs.readFileSync(new URL('../README.md',import.meta.url),'utf8'),['docs/USAGE.md','docs/DEPLOYMENT.md','NETWORK.md','CONTRIBUTING.md','SECURITY.md','LICENSE'],sample);assert.equal(r.missingRepositories.length,0);assert.equal(r.valid,true)});
